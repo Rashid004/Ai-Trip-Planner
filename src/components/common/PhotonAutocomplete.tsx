@@ -1,6 +1,6 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import axios from "axios";
-import { IconChevronDown } from "@tabler/icons-react";
+import { FiChevronDown } from "react-icons/fi";
 
 interface PhotonAutocompleteProps {
   value: string;
@@ -14,6 +14,10 @@ const PhotonAutocomplete = ({ value, onSelect }: PhotonAutocompleteProps) => {
   >([]);
   const [showDropdown, setShowDropdown] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    setQuery(value);
+  }, [value]);
 
   const handleSearch = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -52,7 +56,7 @@ const PhotonAutocomplete = ({ value, onSelect }: PhotonAutocompleteProps) => {
           onChange={handleSearch}
           className="autocomplete-input"
         />
-        <IconChevronDown
+        <FiChevronDown
           size={18}
           className="pointer-events-none absolute top-1/2 right-3 -translate-y-1/2 text-gray-500"
         />

@@ -6,7 +6,7 @@ const Hero = () => {
     <section className="section-container flex flex-col gap-6 py-16">
       <div className="mx-auto max-w-5xl text-center">
         <h1 className="text-4xl leading-tight font-bold tracking-wide md:text-5xl">
-          <span className="text-[#f56551]">
+          <span className="text-red-01">
             Discover Your Next Adventure with AI:
           </span>{" "}
           personalize your itineraries at your fingertips

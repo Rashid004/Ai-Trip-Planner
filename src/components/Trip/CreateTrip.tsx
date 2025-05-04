@@ -4,6 +4,21 @@ import PhotonAutocomplete from "../common/PhotonAutocomplete";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { toast } from "sonner";
+import { generateTripPlan } from "../../service/gemini";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "../ui/dialog";
+import { FcGoogle } from "react-icons/fc";
+import { handleSignInWithGoogle } from "../../service/auth";
+import { useLocalUser, UserSelection } from "../../hooks/useLocalUser";
+import { v4 as uuidv4 } from "uuid";
+import { supabase } from "../../lib/supabaseClient";
+import { TripData } from "../../types/trip";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 const CreateTrip = () => {
   const [formData, setFormData] = useState({
@@ -12,6 +27,9 @@ const CreateTrip = () => {
     budget: "",
     travelList: "",
   });
+  const [loading, setLoading] = useState(false);
+  const [openDialog, setOpenDialog] = useState(false);
+  const user = useLocalUser();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData((prev) => ({
@@ -20,23 +38,69 @@ const CreateTrip = () => {
     }));
   };
 
-  const handleGenerateTrip = () => {
+  const handleGenerateTrip = async () => {
+    if (!user) {
+      setOpenDialog(true);
+      return;
+    }
+
     if (
       !formData.destination ||
       !formData.duration ||
       !formData.budget ||
       !formData.travelList
     ) {
-      toast("Please fill in all the fields to generate your trip. 😢");
+      toast("Please fill in all the fields to generate your trip.");
       return;
     }
 
     if (Number(formData.duration) > 5 || Number(formData.duration) < 1) {
-      alert("Duration should be between 1 and 5 days.");
+      toast("Duration must be between 1 and 5 days.");
       return;
     }
 
-    console.log("Form Data", formData);
+    try {
+      setLoading(true);
+
+      const tripData = await generateTripPlan(formData);
+      await handleAddTrip(tripData, formData, user.email);
+      toast.success("Trip successfully generated and saved!");
+      setFormData({
+        destination: "",
+        duration: 0,
+        budget: "",
+        travelList: "",
+      });
+    } catch (error) {
+      console.error("Trip generation failed:", error);
+      toast.error("Failed to generate your trip. Try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleAddTrip = async (
+    tripData: TripData,
+    formData: UserSelection,
+    userEmail: string,
+  ) => {
+    try {
+      const id = uuidv4();
+      const { error } = await supabase.from("AiTrips").insert([
+        {
+          id,
+          userEmail,
+          userSelection: formData,
+          tripData,
+        },
+      ]);
+
+      if (error) throw error;
+      console.log("Trip saved successfully!");
+    } catch (err) {
+      console.error("Error saving trip:", err);
+      throw new Error("Failed to save trip to database");
+    }
   };
 
   return (
@@ -126,10 +190,44 @@ const CreateTrip = () => {
       </div>
 
       <div className="flex justify-end">
-        <Button className="mt-8" onClick={handleGenerateTrip}>
-          Generate Trip
+        <Button
+          className="mt-8 disabled:cursor-not-allowed"
+          disabled={loading}
+          onClick={handleGenerateTrip}
+        >
+          {loading ? (
+            <AiOutlineLoading3Quarters className="h-8 w-8 animate-spin" />
+          ) : (
+            "Generate Trip"
+          )}
         </Button>
       </div>
+
+      <Dialog open={openDialog} onOpenChange={setOpenDialog}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogDescription className="text-start">
+              <img src="/icons/logo.svg" alt="logo" />
+
+              <DialogTitle className="text-red-01 mt-3 flex items-center gap-2 text-xl font-bold">
+                Sign In with Google
+              </DialogTitle>
+              <p className="mt-2 text-base font-normal text-gray-500">
+                Sign in to the App with your Google account.
+              </p>
+              <Button
+                onClick={handleSignInWithGoogle}
+                className="mt-4 flex w-full items-center gap-2 rounded-sm border-none py-2 text-base font-semibold ring-0 outline-none"
+              >
+                <div>
+                  <FcGoogle className="h-8 w-8" size={28} />
+                </div>
+                Sign In With Google
+              </Button>
+            </DialogDescription>
+          </DialogHeader>
+        </DialogContent>
+      </Dialog>
     </section>
   );
 };

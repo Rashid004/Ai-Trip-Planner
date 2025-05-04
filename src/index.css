@@ -8,6 +8,10 @@
 
 /*---break--- */
 
+@theme {
+  --color-red-01: #f56551;
+}
+
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
 
