@@ -6,6 +6,8 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import CreateTrip from "./pages/Trip.tsx";
 import Home from "./pages/Home.tsx";
 import { Toaster } from "./components/ui/sonner.tsx";
+import ViewTrip from "./components/view-trip/[tripId]/index.tsx";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 const router = createBrowserRouter([
   {
@@ -20,13 +22,21 @@ const router = createBrowserRouter([
         path: "create-trip",
         element: <CreateTrip />,
       },
+      {
+        path: "view-trip/:tripId",
+        element: <ViewTrip />,
+      },
     ],
   },
 ]);
 
+const queryClient = new QueryClient();
+
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <RouterProvider router={router} />
-    <Toaster />
+    <QueryClientProvider client={queryClient}>
+      <RouterProvider router={router} />
+      <Toaster />
+    </QueryClientProvider>
   </StrictMode>,
 );

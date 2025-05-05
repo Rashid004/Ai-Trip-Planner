@@ -16,9 +16,10 @@ import { FcGoogle } from "react-icons/fc";
 import { handleSignInWithGoogle } from "../../service/auth";
 import { useLocalUser, UserSelection } from "../../hooks/useLocalUser";
 import { v4 as uuidv4 } from "uuid";
-import { supabase } from "../../lib/supabaseClient";
 import { TripData } from "../../types/trip";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import { useNavigate } from "react-router-dom";
+import { createTrip } from "../../service/supabaseTripService";
 
 const CreateTrip = () => {
   const [formData, setFormData] = useState({
@@ -29,6 +30,7 @@ const CreateTrip = () => {
   });
   const [loading, setLoading] = useState(false);
   const [openDialog, setOpenDialog] = useState(false);
+  const navigate = useNavigate();
   const user = useLocalUser();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -86,23 +88,13 @@ const CreateTrip = () => {
   ) => {
     try {
       const id = uuidv4();
-      const { error } = await supabase.from("AiTrips").insert([
-        {
-          id,
-          userEmail,
-          userSelection: formData,
-          tripData,
-        },
-      ]);
-
-      if (error) throw error;
-      console.log("Trip saved successfully!");
+      await createTrip(id, tripData, formData, userEmail);
+      navigate(`/view-trip/${id}`);
     } catch (err) {
       console.error("Error saving trip:", err);
       throw new Error("Failed to save trip to database");
     }
   };
-
   return (
     <section className="section-container flex flex-col gap-12 py-16">
       <div>

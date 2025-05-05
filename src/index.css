@@ -232,7 +232,12 @@ Button {
   body {
     @apply bg-background text-foreground font-sans;
   }
-
+  .main-container {
+    @apply flex w-full flex-col max-md:gap-y-10 lg:gap-y-[60px] xl:gap-y-[80px];
+  }
+  .section-container-1 {
+    @apply mx-auto max-w-7xl max-lg:px-6 max-sm:px-5 lg:px-8;
+  }
   .section-container {
     @apply mx-auto max-w-6xl max-lg:px-6 max-sm:px-5 lg:px-8;
   }
