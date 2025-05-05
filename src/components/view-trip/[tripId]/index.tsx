@@ -1,20 +1,32 @@
-import { useQuery } from "@tanstack/react-query";
+// pages/ViewTrip.tsx
+
 import { useParams } from "react-router-dom";
-import { getAllData } from "../../../service/supabaseTripService";
+import { useQuery } from "@tanstack/react-query";
 import InformationSection from "../components/InformationSection";
+import Hotels from "../components/Hotels";
+import { TripRecord } from "../../../types/trip";
+import { getTripById } from "../../../service/supabaseTripService";
 
 const ViewTrip = () => {
-  const { tripId } = useParams();
+  const { tripId } = useParams<{ tripId: string }>();
 
-  const { data, isLoading, isError } = useQuery({
+  const {
+    data: trip,
+    isLoading,
+    isError,
+  } = useQuery<TripRecord | null>({
     queryKey: ["trip", tripId],
-    queryFn: async () => getAllData(),
+    queryFn: () => getTripById(tripId!),
     enabled: !!tripId,
   });
-  console.log(data);
+  console.log(trip);
+  if (isLoading) return <div>Loading...</div>;
+  if (isError || !trip) return <div>Error loading trip data.</div>;
+
   return (
     <section className="section-container-1 my-10">
-      <InformationSection tripData={data} />
+      <InformationSection trip={trip} />
+      <Hotels hotels={trip.tripData.HotelOptions} />
     </section>
   );
 };

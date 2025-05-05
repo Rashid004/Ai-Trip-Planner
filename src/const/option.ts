@@ -50,6 +50,41 @@ export const SelectBudgetOptions = [
   },
 ];
 
-export const AI_PROMPT = `Generate a travel plan for location: {location}, for {totalDays} days for a {traveler} with a {budget} budget.
-Give hotel options: hotelName, address, price, imageUrl, geoCoordinates, rating, description.
-Then, suggest an itinerary: placeName, placeDetails, imageUrl, geoCoordinates, ticketPricing, travelTime for {totalDays} days in JSON format.`;
+export const AI_PROMPT = `
+Generate a travel plan for location: {location}, for {totalDays} days, for a {traveler}, with a {budget} budget.
+
+Return a strict JSON object using the exact format below:
+
+{
+  "hotelOptions": [
+    {
+      "hotelName": "string",
+      "address": "string",
+      "price": { "low": number, "high": number },
+      "rating": number,
+      "imageUrl": "real and valid image URL",
+      "description": "string",
+      "geoCoordinates": { "latitude": number, "longitude": number }
+    }
+  ],
+  "itinerary": {
+    "day1": [
+      {
+        "placeName": "string",
+        "placeDetails": "string",
+        "imageUrl": "real and valid image URL",
+        "geoCoordinates": { "latitude": number, "longitude": number },
+        "ticketPricing": "string or object with prices",
+        "travelTime": "string"
+      }
+    ],
+    "day2": [...],
+    "day3": [...]
+  }
+}
+
+Instructions:
+- Use real and accurate hotel and place names based on the location.
+- Only return a JSON object — no markdown, no backticks, no explanation.
+- Image URLs must be from reliable public sources such as Booking.com, Wikimedia, or Google Places.
+`;

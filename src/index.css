@@ -264,4 +264,7 @@ Button {
   .form-input {
     @apply w-full rounded border border-gray-300 bg-transparent p-2 text-base;
   }
+  .badge {
+    @apply rounded-full bg-gray-100 px-4 py-1 text-sm font-medium;
+  }
 }

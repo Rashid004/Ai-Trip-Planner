@@ -1,6 +1,6 @@
 import { UserSelection } from "../hooks/useLocalUser";
 import { supabase } from "../lib/supabaseClient";
-import { TripData } from "../types/trip";
+import { TripData, TripRecord } from "../types/trip";
 
 // Get All Data
 export const getAllData = async () => {
@@ -9,17 +9,20 @@ export const getAllData = async () => {
   return data;
 };
 
-// get by id
-export const getTripById = async (id: string) => {
+export const getTripById = async (id: string): Promise<TripRecord | null> => {
   const { data, error } = await supabase
     .from("AiTrips")
     .select("*")
     .eq("id", id)
     .single();
-  if (error) throw error;
+
+  if (error) {
+    console.error("Error fetching trip:", error);
+    return null;
+  }
+
   return data;
 };
-
 // create new trip
 export const createTrip = async (
   id: string,
