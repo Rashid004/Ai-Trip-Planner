@@ -188,7 +188,10 @@ const CreateTrip = () => {
           onClick={handleGenerateTrip}
         >
           {loading ? (
-            <AiOutlineLoading3Quarters className="h-8 w-8 animate-spin" />
+            <p className="flex items-center gap-1">
+              <AiOutlineLoading3Quarters className="h-8 w-8 animate-spin" />{" "}
+              Generating...
+            </p>
           ) : (
             "Generate Trip"
           )}

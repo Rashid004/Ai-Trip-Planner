@@ -6,11 +6,11 @@ const Hotels = ({ hotels }: { hotels: HotelOption[] }) => {
     <section>
       <h2 className="mt-5 text-xl font-bold md:mt-8">Hotel Recommendations</h2>
       <div className="mt-4 grid gap-10 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-        {hotels.map((hotel, index) => (
+        {hotels?.map((hotel, index) => (
           <Link
             key={index}
             to={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-              hotel.HotelAddress,
+              hotel.hotelAddress,
             )}`}
             target="_blank"
             rel="noopener noreferrer"
@@ -18,17 +18,17 @@ const Hotels = ({ hotels }: { hotels: HotelOption[] }) => {
           >
             <div className="flex h-full flex-col items-start rounded-lg">
               <img
-                src={"/images/image4.png"}
-                alt={hotel.HotelName}
+                src={hotel.hotelImageUrl && "/images/img1.jpg"}
+                alt={hotel.hotelName}
                 className="h-[200px] w-full rounded-lg object-cover"
               />
               <div className="space-y-1.5 pt-1.5">
-                <h3 className="text-lg font-semibold">{hotel.HotelName}</h3>
+                <h3 className="text-lg font-semibold">{hotel.hotelName}</h3>
                 <p className="text-base text-gray-500">
-                  📍 {hotel.HotelAddress}
+                  📍 {hotel.hotelAddress}
                 </p>
                 <p className="text-sm font-medium text-gray-700">
-                  💰 {hotel.Price}
+                  💰 {hotel.price}
                 </p>
                 <p className="text-sm text-gray-500">⭐ {hotel.rating}</p>
               </div>

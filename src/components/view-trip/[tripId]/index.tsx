@@ -26,15 +26,17 @@ const ViewTrip = () => {
   return (
     <section className="section-container-1 my-10">
       <InformationSection trip={trip} />
-      <Hotels hotels={trip?.tripData.hotels} />
-      {Array.isArray(trip.tripData.itinerary) &&
-        trip.tripData.itinerary.map((dayBlock: { day: string; plan: [] }) => (
-          <ItineraryDay
-            key={dayBlock.day}
-            day={dayBlock.day}
-            plan={dayBlock.plan}
-          />
-        ))}
+      <Hotels hotels={trip.tripData.travelPlan.hotels} />
+      {Array.isArray(trip.tripData.travelPlan?.itinerary) &&
+        trip.tripData.travelPlan?.itinerary?.map(
+          (dayBlock: { day: string; plan: [] }) => (
+            <ItineraryDay
+              key={dayBlock.day}
+              day={dayBlock.day}
+              plan={dayBlock.plan}
+            />
+          ),
+        )}
       <Footer />
     </section>
   );
