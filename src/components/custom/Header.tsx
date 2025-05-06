@@ -9,12 +9,10 @@ const Header = () => {
 
   return (
     <header className="flex flex-wrap items-center justify-between gap-4 px-5 py-3 shadow-sm md:flex-nowrap">
-      {/* Logo */}
       <Link to="/" className="flex-shrink-0">
         <img src="/icons/logo.svg" alt="logo" className="h-9 md:h-10" />
       </Link>
 
-      {/* Right Side */}
       <div className="flex flex-wrap items-center gap-3">
         {user ? (
           <>
