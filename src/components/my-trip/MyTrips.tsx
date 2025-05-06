@@ -7,7 +7,11 @@ import { Link } from "react-router-dom";
 const MyTrips = () => {
   const user = useLocalUser();
 
-  const { data: trips, isLoading } = useQuery<TripRecord[]>({
+  const {
+    data: trips,
+    isLoading,
+    isError,
+  } = useQuery<TripRecord[]>({
     queryKey: ["myTrips", user?.email],
     queryFn: async () => {
       const allTrips = await getAllData();
@@ -17,7 +21,17 @@ const MyTrips = () => {
   });
 
   if (isLoading)
-    return <p className="mt-8 text-center">Loading your trips...</p>;
+    return (
+      <p className="mt-8 flex items-center justify-center text-center">
+        Loading your trips...
+      </p>
+    );
+  if (isError)
+    return (
+      <p className="mt-8 flex items-center justify-center text-center">
+        Error loading trips
+      </p>
+    );
 
   return (
     <section className="section-container py-10">
@@ -28,10 +42,7 @@ const MyTrips = () => {
           <Link to={`/view-trip/${trip.id}`} key={trip.id}>
             <div className="overflow-hidden rounded-lg shadow transition-all duration-300 hover:scale-[1.02] hover:shadow-md">
               <img
-                src={
-                  trip.tripData.hotels?.[0]?.hotelImageUrl ||
-                  "/images/fallback.jpg"
-                }
+                src={"/images/img1.jpg"}
                 alt={trip.userSelection.destination}
                 className="h-[180px] w-full object-cover"
               />

@@ -16,16 +16,20 @@ const Hotels = ({ hotels }: { hotels: HotelOption[] }) => {
             rel="noopener noreferrer"
             className="transition-transform duration-300 hover:scale-105"
           >
-            <div className="overflow-hidden rounded-lg shadow-md">
+            <div className="flex h-full flex-col items-start rounded-lg">
               <img
-                src={hotel.hotelImageUrl}
+                src={"/images/image4.png"}
                 alt={hotel.HotelName}
-                className="h-[200px] w-full object-cover"
+                className="h-[200px] w-full rounded-lg object-cover"
               />
-              <div className="p-4">
+              <div className="space-y-1.5 pt-1.5">
                 <h3 className="text-lg font-semibold">{hotel.HotelName}</h3>
-                <p className="text-sm text-gray-500">📍 {hotel.HotelAddress}</p>
-                <p className="text-sm text-gray-500">💰 {hotel.Price}</p>
+                <p className="text-base text-gray-500">
+                  📍 {hotel.HotelAddress}
+                </p>
+                <p className="text-sm font-medium text-gray-700">
+                  💰 {hotel.Price}
+                </p>
                 <p className="text-sm text-gray-500">⭐ {hotel.rating}</p>
               </div>
             </div>

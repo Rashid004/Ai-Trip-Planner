@@ -29,7 +29,7 @@ const ItineraryDay = ({ day, plan }: ItineraryDayProps) => {
               className="flex flex-col items-start gap-4 rounded-2xl border border-gray-200 bg-white p-4 shadow-sm transition-all hover:shadow-md sm:flex-row"
             >
               <img
-                src={place.placeImageUrl}
+                src={"/images/img2.jpg"}
                 alt={place.placeName}
                 className="h-32 w-full rounded-xl object-cover sm:w-40"
               />

@@ -56,8 +56,8 @@ const CreateTrip = () => {
       return;
     }
 
-    if (Number(formData.duration) > 5 || Number(formData.duration) < 1) {
-      toast("Duration must be between 1 and 5 days.");
+    if (Number(formData.duration) > 15 || Number(formData.duration) < 1) {
+      toast("Duration must be between 1 and 15 days.");
       return;
     }
 

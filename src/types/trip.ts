@@ -1,6 +1,6 @@
 export interface UserSelection {
   destination: string;
-  duration: number | string;
+  duration: number;
   budget: string;
   travelList: string;
 }

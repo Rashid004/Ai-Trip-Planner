@@ -18,10 +18,10 @@ export const generateTripPlan = async (formData: {
   budget: string;
   travelList: string;
 }) => {
-  const prompt = AI_PROMPT.replace("{location}", formData.destination)
-    .replace("{traveler}", formData.travelList)
-    .replace("{budget}", formData.budget)
-    .replace(/{totalDays}/g, String(formData.duration));
+  const prompt = AI_PROMPT.replace(/{destination}/g, formData.destination)
+    .replace(/{duration}/g, String(formData.duration))
+    .replace(/{travelList}/g, formData.travelList)
+    .replace(/{budget}/g, formData.budget);
 
   console.log("Prompt:", prompt);
   try {

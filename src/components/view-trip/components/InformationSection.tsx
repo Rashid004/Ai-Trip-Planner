@@ -25,7 +25,7 @@ const InformationSection = ({ trip }: { trip: TripRecord }) => {
   return (
     <div>
       <img
-        src={trip.tripData.hotels?.[0].hotelImageUrl}
+        src={"/images/img4.jpg"}
         alt="Trip Destination"
         className="h-[350px] w-full rounded-xl object-cover"
       />
