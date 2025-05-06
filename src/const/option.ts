@@ -51,40 +51,5 @@ export const SelectBudgetOptions = [
 ];
 
 export const AI_PROMPT = `
-Generate a travel plan for location: {location}, for {totalDays} days, for a {traveler}, with a {budget} budget.
-
-Return a strict JSON object using the exact format below:
-
-{
-  "hotelOptions": [
-    {
-      "hotelName": "string",
-      "address": "string",
-      "price": { "low": number, "high": number },
-      "rating": number,
-      "imageUrl": "real and valid image URL",
-      "description": "string",
-      "geoCoordinates": { "latitude": number, "longitude": number }
-    }
-  ],
-  "itinerary": {
-    "day1": [
-      {
-        "placeName": "string",
-        "placeDetails": "string",
-        "imageUrl": "real and valid image URL",
-        "geoCoordinates": { "latitude": number, "longitude": number },
-        "ticketPricing": "string or object with prices",
-        "travelTime": "string"
-      }
-    ],
-    "day2": [...],
-    "day3": [...]
-  }
-}
-
-Instructions:
-- Use real and accurate hotel and place names based on the location.
-- Only return a JSON object — no markdown, no backticks, no explanation.
-- Image URLs must be from reliable public sources such as Booking.com, Wikimedia, or Google Places.
+Generate Travel Plan for Location: {destination}, for {duration} Days for {travelList} with a {budget} budget, Give me a Hotels options list with HotelName, Hotel address, Price, hotel image url, geo coordinates, rating, descriptions and suggest itinerary with placeName, Place Details, Place Image Url, Geo Coordinates, ticket Pricing, rating, Time travel each of the location for {duration} days with each day plan with best time to visit in JSON format.
 `;

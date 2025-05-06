@@ -1,11 +1,11 @@
-// pages/ViewTrip.tsx
-
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import InformationSection from "../components/InformationSection";
 import Hotels from "../components/Hotels";
 import { TripRecord } from "../../../types/trip";
 import { getTripById } from "../../../service/supabaseTripService";
+import ItineraryDay from "../components/ItineraryDay";
+import Footer from "../components/Footer";
 
 const ViewTrip = () => {
   const { tripId } = useParams<{ tripId: string }>();
@@ -26,7 +26,16 @@ const ViewTrip = () => {
   return (
     <section className="section-container-1 my-10">
       <InformationSection trip={trip} />
-      <Hotels hotels={trip.tripData.HotelOptions} />
+      <Hotels hotels={trip?.tripData.hotels} />
+      {Array.isArray(trip.tripData.itinerary) &&
+        trip.tripData.itinerary.map((dayBlock: { day: string; plan: [] }) => (
+          <ItineraryDay
+            key={dayBlock.day}
+            day={dayBlock.day}
+            plan={dayBlock.plan}
+          />
+        ))}
+      <Footer />
     </section>
   );
 };

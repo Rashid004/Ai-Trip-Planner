@@ -1,14 +1,31 @@
 import { IoIosSend } from "react-icons/io";
 import { Button } from "../../ui/button";
 import { TripRecord } from "../../../types/trip";
+// import { GetPlaceDetails } from "../../../service/globalApi";
+// import { useEffect } from "react";
 
 const InformationSection = ({ trip }: { trip: TripRecord }) => {
   const { userSelection } = trip;
 
+  // useEffect(() => {
+  //   if (userSelection?.destination) {
+  //     getPlacePhoto(userSelection.destination);
+  //   }
+  // }, [userSelection]);
+
+  // const getPlacePhoto = async (destination: string) => {
+  //   try {
+  //     const data = { textQuery: destination };
+  //     const response = await GetPlaceDetails(data);
+  //     console.log("Google Places Result:", response.data);
+  //   } catch (err) {
+  //     console.error("Google Places API error:", err);
+  //   }
+  // };
   return (
     <div>
       <img
-        src="https://plus.unsplash.com/premium_photo-1661964303354-f0496d6d6e0b?q=80&w=1920&auto=format&fit=crop"
+        src={trip.tripData.hotels?.[0].hotelImageUrl}
         alt="Trip Destination"
         className="h-[350px] w-full rounded-xl object-cover"
       />

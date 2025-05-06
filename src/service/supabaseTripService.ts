@@ -1,6 +1,6 @@
 import { UserSelection } from "../hooks/useLocalUser";
 import { supabase } from "../lib/supabaseClient";
-import { TripData, TripRecord } from "../types/trip";
+import { TripRecord } from "../types/trip";
 
 // Get All Data
 export const getAllData = async () => {
@@ -26,7 +26,7 @@ export const getTripById = async (id: string): Promise<TripRecord | null> => {
 // create new trip
 export const createTrip = async (
   id: string,
-  tripData: TripData,
+  tripData: TripRecord,
   userSelection: UserSelection,
   userEmail: string,
 ) => {

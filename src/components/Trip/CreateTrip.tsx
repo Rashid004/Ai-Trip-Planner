@@ -16,10 +16,10 @@ import { FcGoogle } from "react-icons/fc";
 import { handleSignInWithGoogle } from "../../service/auth";
 import { useLocalUser, UserSelection } from "../../hooks/useLocalUser";
 import { v4 as uuidv4 } from "uuid";
-import { TripData } from "../../types/trip";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import { createTrip } from "../../service/supabaseTripService";
+import { TripRecord } from "../../types/trip";
 
 const CreateTrip = () => {
   const [formData, setFormData] = useState({
@@ -82,7 +82,7 @@ const CreateTrip = () => {
   };
 
   const handleAddTrip = async (
-    tripData: TripData,
+    tripData: TripRecord,
     formData: UserSelection,
     userEmail: string,
   ) => {

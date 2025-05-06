@@ -6,35 +6,55 @@ import { FaSignOutAlt } from "react-icons/fa";
 
 const Header = () => {
   const user = useLocalUser();
+
   return (
-    <header className="flex items-center justify-between p-3 px-5 shadow-sm">
-      <Link to="/">
-        <div>
-          <img src="/icons/logo.svg" alt="logo" />
-        </div>
+    <header className="flex flex-wrap items-center justify-between gap-4 px-5 py-3 shadow-sm md:flex-nowrap">
+      {/* Logo */}
+      <Link to="/" className="flex-shrink-0">
+        <img src="/icons/logo.svg" alt="logo" className="h-9 md:h-10" />
       </Link>
-      <div className="flex items-center gap-4">
+
+      {/* Right Side */}
+      <div className="flex flex-wrap items-center gap-3">
         {user ? (
-          <div className="flex items-center gap-3">
-            {user.user_metadata?.avatar_url && (
+          <>
+            {/* Avatar */}
+            {user.user_metadata?.avatar_url ? (
               <img
                 src={user.user_metadata.avatar_url}
                 alt="avatar"
-                className="h-8 w-8 rounded-full border"
+                className="h-9 w-9 rounded-full border object-cover"
               />
+            ) : (
+              <div className="flex h-9 w-9 items-center justify-center rounded-full bg-gray-300 text-sm font-semibold text-white">
+                {user.email?.[0]?.toUpperCase()}
+              </div>
             )}
-            <span className="text-sm font-medium">
-              {user.user_metadata?.full_name || user.email}
-            </span>
+
+            {/* My Trips Button */}
+            <Link to="/my-trip">
+              <Button variant="outline" className="rounded-full px-4 text-sm">
+                My Trips
+              </Button>
+            </Link>
+
+            {/* Create Trip */}
+            <Link to="/create-trip">
+              <Button variant="outline" className="rounded-full px-4 text-sm">
+                + Create Trip
+              </Button>
+            </Link>
+
+            {/* Sign Out */}
             <Button
-              variant={"destructive"}
+              variant="destructive"
               onClick={handleSignOut}
-              className="flex items-center gap-1.5"
+              className="flex items-center gap-2 px-4 text-sm"
             >
               <FaSignOutAlt />
               Sign Out
             </Button>
-          </div>
+          </>
         ) : (
           <Button onClick={handleSignInWithGoogle}>Sign In</Button>
         )}

@@ -23,12 +23,14 @@ export const generateTripPlan = async (formData: {
     .replace("{budget}", formData.budget)
     .replace(/{totalDays}/g, String(formData.duration));
 
+  console.log("Prompt:", prompt);
   try {
     const result = await model.generateContent({
       contents: [{ role: "user", parts: [{ text: prompt }] }],
       generationConfig,
     });
 
+    console.log("Gemini Generation Result:", result);
     const text = result.response.text();
     const cleaned = text.replace(/```json|```/g, "").trim();
     return JSON.parse(cleaned);

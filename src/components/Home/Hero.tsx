@@ -22,6 +22,13 @@ const Hero = () => {
           </Button>
         </Link>
       </div>
+      <div>
+        <img
+          src="/images/landing.png"
+          alt="Landing"
+          className="h-full w-full object-cover"
+        />
+      </div>
     </section>
   );
 };

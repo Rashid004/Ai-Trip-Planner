@@ -6,14 +6,11 @@ export interface UserSelection {
 }
 
 export interface HotelOption {
-  hotelName: string;
-  address: string;
-  price: {
-    low: number;
-    high: number;
-  };
+  HotelName: string;
+  HotelAddress: string;
+  Price: string;
   rating: number;
-  imageUrl: string;
+  hotelImageUrl: string;
   description: string;
   geoCoordinates: {
     latitude: number;
@@ -38,7 +35,7 @@ export interface Itinerary {
 }
 
 export interface TripDataContent {
-  HotelOptions: HotelOption[];
+  hotels: HotelOption[];
   itinerary: Itinerary;
 }
 

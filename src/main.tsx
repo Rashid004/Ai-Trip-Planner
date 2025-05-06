@@ -8,6 +8,7 @@ import Home from "./pages/Home.tsx";
 import { Toaster } from "./components/ui/sonner.tsx";
 import ViewTrip from "./components/view-trip/[tripId]/index.tsx";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import MyTrips from "./components/my-trip/MyTrips.tsx";
 
 const router = createBrowserRouter([
   {
@@ -25,6 +26,10 @@ const router = createBrowserRouter([
       {
         path: "view-trip/:tripId",
         element: <ViewTrip />,
+      },
+      {
+        path: "my-trip",
+        element: <MyTrips />,
       },
     ],
   },
