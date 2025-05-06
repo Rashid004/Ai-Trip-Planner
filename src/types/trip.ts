@@ -7,12 +7,13 @@ export interface UserSelection {
 
 export interface HotelOption {
   hotelName: string;
+  itinerary?: Itinerary;
+
   hotelAddress: string;
   price: string;
   rating: number;
   hotelImageUrl: string;
   description: string;
-  itinerary: ItineraryPlace[];
   geoCoordinates: {
     latitude: number;
     longitude: number;
@@ -40,13 +41,20 @@ export interface TripDataContent {
     hotels: HotelOption[];
   };
   hotels: HotelOption[];
-  itinerary: Itinerary;
+
+  itinerary?: { day: string; plan: [] }[];
 }
 
 export interface TripRecord {
   id: string;
   userEmail: string;
   userSelection: UserSelection;
-  tripData: TripDataContent;
+  // tripData: TripDataContent;
   created_at?: string;
+  tripData: {
+    travelPlan: {
+      hotels: HotelOption[];
+      itinerary?: { day: string; plan: [] }[];
+    };
+  };
 }
